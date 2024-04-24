@@ -1,16 +1,20 @@
-# This is a sample Python script.
+import requests
+APP_ID = "f34647b8"
+API_KEY = "a343f7c656ab88847164a225d50a7e1a"
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+natural_excercise_endpoint = "https://trackapi.nutritionix.com/v2/natural/exercise"
 
+headers = {
+    "x-app-id": APP_ID,
+    "x-app-key": API_KEY
+}
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+parameters = {
+    "query": "I ran 1 mile",
+    "weight_kg": 55,
+    "height_cm": 167.64,
+    "age": 60
+}
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+natural_exe_response = requests.post(url=natural_excercise_endpoint,json=parameters,headers=headers)
+print(natural_exe_response.text)
