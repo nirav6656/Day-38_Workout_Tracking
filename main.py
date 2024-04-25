@@ -10,7 +10,7 @@ headers = {
 }
 
 parameters = {
-    "query": "I ran 1 mile",
+    "query": input("tell me what you did today ? "),
     "weight_kg": 55,
     "height_cm": 167.64,
     "age": 60
@@ -18,4 +18,7 @@ parameters = {
 
 
 natural_exe_response = requests.post(url=natural_excercise_endpoint,json=parameters,headers=headers)
-print(natural_exe_response.text)
+# print(natural_exe_response.text)
+
+getting_sheet_data = requests.get(url="https://api.sheety.co/ce03a24dd7107449001e616b7fe7ac4c/myWorkouts/workouts")
+print(getting_sheet_data.json())
