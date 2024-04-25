@@ -16,5 +16,6 @@ parameters = {
     "age": 60
 }
 
+
 natural_exe_response = requests.post(url=natural_excercise_endpoint,json=parameters,headers=headers)
 print(natural_exe_response.text)
