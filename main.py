@@ -1,6 +1,7 @@
 import requests
 import datetime as dt
 import json
+
 APP_ID = "f34647b8"
 API_KEY = "a343f7c656ab88847164a225d50a7e1a"
 
@@ -18,15 +19,12 @@ parameters = {
     "age": 60
 }
 
-
-natural_exe_response = requests.post(url=natural_excercise_endpoint,json=parameters,headers=headers)
+natural_exe_response = requests.post(url=natural_excercise_endpoint, json=parameters, headers=headers)
 nutrition_facts = natural_exe_response.text
 
-
 data = json.loads(nutrition_facts)
-print(data)
 
-getting_sheet_data = requests.get(url="https://api.sheety.co/ce03a24dd7107449001e616b7fe7ac4c/myWorkouts/workouts")
+getting_sheet_data = requests.get(url="https://api.sheety.co/ce03a24dd7107449001e616b7fe7ac4c/myWorkouts/sheet1")
 
 current_date_and_time = dt.datetime.now()
 current_date = current_date_and_time.strftime("%d/%m/%Y")
@@ -35,20 +33,24 @@ excercise_done = data["exercises"][0]["name"]
 excercise_duration = int(data["exercises"][0]["duration_min"])
 excercise_calories = int(data["exercises"][0]["nf_calories"])
 
-
 put_data_parameters = {
-    "My Workouts":
-        {"Date": current_date,
-         "Time": current_time,
-         "Exercise": excercise_done,
-         "Duration": excercise_duration,
-         "Calories": excercise_calories,
-         "id": 3}
+    "sheet1": {
+        "Date": current_date,
+        "Time": current_time,
+        "Exercise": excercise_done,
+        "Duration": excercise_duration,
+        "Calories": excercise_calories,
+        # "Id": "4"
+    }
 }
 
+user_cred = requests.get('https://httpbin.org/basic-auth/user/pass', auth=('user', 'pass'))
 
-put_data_to_sheet = requests.post(url="https://api.sheety.co/ce03a24dd7107449001e616b7fe7ac4c/myWorkouts/workouts",
+json_data = json.dumps(put_data_parameters)
+put_data_to_sheet = requests.post(url="https://api.sheety.co/ce03a24dd7107449001e616b7fe7ac4c/myWorkouts/sheet1",
                                   json=put_data_parameters,
-                                  headers=headers)
+                                  # auth=("nirav6656", "N.k.6656")
+                                  headers={"Authorization": "Basic bmlyYXY2NjU2Ok4uay42NjU2"}
+                                  )
 
 print(put_data_to_sheet.content)
