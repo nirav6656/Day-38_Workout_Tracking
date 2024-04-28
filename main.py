@@ -10,7 +10,7 @@ headers = {
 }
 
 parameters = {
-    "query": input("tell me what you did today ? "),
+    "query": input("Enter your excersice "),
     "weight_kg": 55,
     "height_cm": 167.64,
     "age": 60
